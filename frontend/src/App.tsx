@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Alert from 'react-popup-alert'
 import './App.css'
 import axios from 'axios'
 const serverURL = "http://localhost:3000";

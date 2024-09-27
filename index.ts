@@ -29,7 +29,7 @@ app.get('/names', (req,res) => {
 
 
 app.get('/surveys', async (req, res) => {
-  // stub, but this should return surveys
+  // this should display all existing surveys
   const surveys = await prisma.survey.findMany({
     include: {
       questions: {
@@ -42,13 +42,29 @@ app.get('/surveys', async (req, res) => {
   return res.json(surveys)
 })
 
+app.get('/surveys/create', async (res: any,req: { body: { name: string; question: string[]; }; }) => {
+  // this should be to create a new survey
+  const newSurveyName:string = req.body.name
+  const surveyQuestions: string[] = req.body.question
+
+  const surveys = await prisma.survey.create({
+    data: {
+      name: newSurveyName,
+      questions: {
+        create: [
+        
+        ]
+      }
+    },
+  })
+})
+
 app.post("/submit", (req,res) => {
   // run some function that stores into to the database
   // add-to-db.ts
   const questionAnswerPair = req.body
   const [question] = Object.keys(questionAnswerPair)
   const answer = questionAnswerPair.question
-  main(question, answer);
 
   const info = req.body;
   console.log(req.body)

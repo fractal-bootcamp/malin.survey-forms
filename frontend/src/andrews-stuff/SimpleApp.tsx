@@ -2,12 +2,10 @@ import { useEffect, useState } from "react"
 import Survey, { SurveyType } from "./Survey"
 import axios from "axios"
 
-
 // add React Router
-// this is the Home Page
+// this is the Home Page where Surveys are displayed
 // also add a Survey/{id}/edit page
 // also add a Survey/{id} page for taking the survey
-
 
 const SimpleApp = () => {
 

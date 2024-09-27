@@ -1,5 +1,5 @@
 
-// this is a question and represents questions.
+// this is a question and represents questions
 
 import type { Answer, QuestionType } from "./Survey"
 
