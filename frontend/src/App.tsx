@@ -44,6 +44,7 @@ const SubmitForm: React.FC<SubmitFormProps> = ({ value, onSubmit }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(e, value)
+    window.location.reload();
   }
 
   return (
