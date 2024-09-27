@@ -42,21 +42,29 @@ app.get('/surveys', async (req, res) => {
   return res.json(surveys)
 })
 
-app.get('/surveys/create', async (res: any,req: { body: { name: string; question: string[]; }; }) => {
-  // this should be to create a new survey
-  const newSurveyName:string = req.body.name
-  const surveyQuestions: string[] = req.body.question
+type QuestionArrayOfObjects = {
+  name: string;
+};
 
+app.post('/create', async (req: { body: { name: string; questions: string[]; }; }, res: any) => {
+  // this should be to create a new survey
+  const newSurveyName:string = req.body.name;
+  const surveyQuestions: string[] = req.body.questions;
+
+  console.log(req.body)
   const surveys = await prisma.survey.create({
     data: {
       name: newSurveyName,
       questions: {
-        create: [
-        
-        ]
+        create: surveyQuestions.map((question) => ({name: question})) 
       }
     },
-  })
+    include: {
+      questions: true
+    }
+  });
+
+  res.json("got it")
 })
 
 app.post("/submit", (req,res) => {

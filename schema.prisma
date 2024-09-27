@@ -15,7 +15,7 @@ model Survey {
 
 model Question {
   id       String   @id @default(cuid())
-  surveyId String   @unique
+  surveyId String
   name     String
   survey   Survey   @relation(fields: [surveyId], references: [id])
   answers  Answers?
