@@ -1,6 +1,4 @@
 
-
-
 // I want this component to represent a Survey.
 // That means all the things that a Survey is.
 // It also means it should be re-usable
@@ -24,6 +22,7 @@ export type SurveyType = {
   name: string,
   questions: QuestionType[]
 }
+
 const Survey = ({ survey, editMode }: { survey: SurveyType, editMode: boolean }) => {
   return (
     <div className="bg-red-300 rounded-lg p-4 gap-2 flex flex-col">
@@ -32,7 +31,7 @@ const Survey = ({ survey, editMode }: { survey: SurveyType, editMode: boolean })
       <button className="w-32 h-8 border-2 border-black">edit survey!</button>
       <div className="gap-2 flex flex-col">
         {survey?.questions?.map((question) => {
-          return <Question question={question} />
+          return <Question question={question} editMode={editMode} />
         })}
       </div>
     </div>
