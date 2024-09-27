@@ -1,36 +1,58 @@
 const express = require('express');
 const cors = require('cors')
 const port = 3000;
+// import main from './add-to-db'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 const app = express();
+app.use(express.json())
 app.use(cors());
 
 
+interface ContactDetails {
+  name: string;
+  address: string;
+  email: string;
+}
 
-const dummyData:string[] = ['some data lives here', 'some second bit of data lives here']
-let name:string[] = ['first'];
+const contacts:ContactDetails[] = [{name: '', address: '', email: ''}];
 
 //Middleware
 app.use(express.json())
 
 app.get('/names', (req,res) => {
-  res.send(name)
+  res.send(contacts)
   console.log('testing that logging works')
-  console.log(name)
 });
 
-app.get('/first', (req,res) => {
-  res.send(dummyData[0])
-});
 
-app.get('/second', (req,res) => {
-  res.send(dummyData[1])
-});
+app.get('/surveys', async (req, res) => {
+  // stub, but this should return surveys
+  const surveys = await prisma.survey.findMany({
+    include: {
+      questions: {
+        include: {
+          answers: true
+        }
+      }
+    }
+  })
+  return res.json(surveys)
+})
 
 app.post("/submit", (req,res) => {
+  // run some function that stores into to the database
+  // add-to-db.ts
+  const questionAnswerPair = req.body
+  const [question] = Object.keys(questionAnswerPair)
+  const answer = questionAnswerPair.question
+  main(question, answer);
+
   const info = req.body;
   console.log(req.body)
-  name.push(info.name);
+  contacts.push(info);
   res.send('Data recieved and stored');
 })
 
