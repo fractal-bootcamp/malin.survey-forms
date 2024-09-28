@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import CreateSurveyForm from './CreateSurvey.tsx'
+import Surveys from './Surveys.tsx'
 import './index.css'
 import {
   createBrowserRouter,
@@ -14,9 +15,14 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/create-survey",
+    path: "/create",
     element: <CreateSurveyForm />
   },
+  {
+    path: "/surveys",
+    element: <Surveys />
+  },
+
 ]);
 
 createRoot(document.getElementById('root')!).render(

@@ -22,7 +22,6 @@ const GenerateNewForm = ({ surveyName, questions, addQuestion, setQuestions, sub
   return (
     <div>
       <div className='text-3xl'>{surveyName}</div>
-      <button onClick={addQuestion} className='mt-4'>Add a new survey question</button>
       {questions.map((question: QuestionArrayOfObjects[], index: number) => (
         <NewQuestionBlock
           key={index}
@@ -30,14 +29,24 @@ const GenerateNewForm = ({ surveyName, questions, addQuestion, setQuestions, sub
           onChange={(e) => handleNewQuestion(e, index)}
         />
       ))}
-      {questions.length > 0 ?
-        <button onClick={submitFormToServer}>submit</button> :
-        null}
+      <button onClick={addQuestion} className='m-8'>Add a new survey question</button>
+      <div>
+        {questions.length > 0 ?
+          <button onClick={submitFormToServer}>submit</button> :
+          null}
+      </div>
+
     </div>
   )
 }
 
-const NewSurveyName = ({ value, onChange, generateForm }) => {
+type NewSurveyNameProps = {
+  value: string,
+  onChange: React.ChangeEventHandler<HTMLInputElement>,
+  generateForm: any
+}
+
+const NewSurveyName = ({ value, onChange, generateForm }: NewSurveyNameProps) => {
   return (
     <div>
       <div className='text-2xl mb-8'>You can create a new Survey here!</div>
@@ -72,7 +81,10 @@ const CreateSurveyForm = () => {
     const createdSurvey = { name: surveyName, questions: questions }
 
     e.preventDefault(); // Prevent the default form submission behavior
-    await axios.post(serverURL + "/create", createdSurvey);
+    const response = await axios.post(serverURL + "/create", createdSurvey);
+    // const response = otherMachine.sum(2, 2)
+    console.log(response)
+    location.reload();
   };
 
   const addQuestion = () => {
